@@ -7,16 +7,18 @@ package org.noiseseeker;
 public class NoiseHelper
 {
     private Integer rows[];
-    int MAX_CELL_VALUE;
-    int BIT_SIZE;
+    private int maxCellValue;
+    private int numberOfCells;
 
-    public NoiseHelper(int bitSize, int maxCellValue)
+    public NoiseHelper(int numberOfCells, int maxCellValue)
     {
-        this.BIT_SIZE = bitSize;
-        this.MAX_CELL_VALUE = maxCellValue;
+        this.numberOfCells = numberOfCells;
+        this.maxCellValue = maxCellValue;
 
-        this.rows = new Integer[BIT_SIZE];
-        for (int iterator = 0; iterator < BIT_SIZE; iterator++) {
+        this.rows = new Integer[this.numberOfCells];
+
+        for (int iterator = 0; iterator < this.numberOfCells; iterator++)
+        {
             this.rows[iterator] = 0;
         }
     }
@@ -25,9 +27,9 @@ public class NoiseHelper
      *
      * @return
      */
-    public int getBitSize()
+    public int getNumberOfCells()
     {
-        return this.BIT_SIZE;
+        return this.numberOfCells;
     }
 
     /**
@@ -36,7 +38,7 @@ public class NoiseHelper
      */
     public int getMaxCellValue()
     {
-        return this.MAX_CELL_VALUE;
+        return this.maxCellValue;
     }
 
     /**
@@ -56,8 +58,8 @@ public class NoiseHelper
     public Integer[][] getCurrentBuffer() {
         Integer[][] arrayTemp = new Integer[16][16];
 
-        for (int y = 0; y < BIT_SIZE; y++)
-            for (int x = 0; x < BIT_SIZE; x++) {
+        for (int y = 0; y < numberOfCells; y++)
+            for (int x = 0; x < numberOfCells; x++) {
                 arrayTemp[x][y] = getBitFromCells(y, x);
             }
 
@@ -74,12 +76,12 @@ public class NoiseHelper
     {
         int number = this.rows[rowIndex];
 
-        // Hack code to get a full-sized bit string (size of BIT_SIZE)
+        // Hack code to get a full-sized bit string (size of numberOfCells)
         String s = Integer.toBinaryString(number);
 
-        if ( s.length() != BIT_SIZE)
+        if ( s.length() != numberOfCells)
         {
-            int delta = BIT_SIZE - s.length();
+            int delta = numberOfCells - s.length();
             String x = "";
             for(int m=0; m<delta; m++)
             {
@@ -96,10 +98,10 @@ public class NoiseHelper
      */
     public void printBuffer(Integer[][] buffer)
     {
-        for (int y = 0; y < BIT_SIZE; y++)
-            for (int x = 0; x < BIT_SIZE; x++) {
+        for (int y = 0; y < numberOfCells; y++)
+            for (int x = 0; x < numberOfCells; x++) {
                 System.out.print(buffer[x][y] + "");
-                if ( x == BIT_SIZE - 1)
+                if ( x == numberOfCells - 1)
                     System.out.println("");
             }
 
@@ -112,8 +114,8 @@ public class NoiseHelper
     public void intArrayNext(Integer[] values)
     {
         int cellMinValue = 0;
-        int cellMaxValue = MAX_CELL_VALUE + 1;
-        int cellIndex = BIT_SIZE - 1;
+        int cellMaxValue = maxCellValue + 1;
+        int cellIndex = numberOfCells - 1;
 
         values[cellIndex] = values[cellIndex] + 1;
 
@@ -135,8 +137,8 @@ public class NoiseHelper
     public boolean intArrayIsMax(Integer[] values)
     {
         boolean isMax = true;
-        int cells = BIT_SIZE;
-        int cellMaxValue = MAX_CELL_VALUE;
+        int cells = numberOfCells;
+        int cellMaxValue = maxCellValue;
 
         for(int i=0; i<cells; i++)
             if ( values[i] >= cellMaxValue)
@@ -152,8 +154,7 @@ public class NoiseHelper
      */
     public void intArrayPrint(Integer[] values)
     {
-        int cells = BIT_SIZE;
-        int cellMaxValue = MAX_CELL_VALUE;
+        int cells = numberOfCells;
 
         for(int i=0; i<cells; i++)
         {
@@ -168,8 +169,8 @@ public class NoiseHelper
      */
     public String intArrayGetString(Integer[] values)
     {
-        int cells = BIT_SIZE;
-        int cellMaxValue = MAX_CELL_VALUE;
+        int cells = numberOfCells;
+        int cellMaxValue = maxCellValue;
 
         StringBuilder stringBuilder = new StringBuilder();
 

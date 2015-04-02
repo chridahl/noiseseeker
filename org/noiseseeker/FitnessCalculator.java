@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 public class FitnessCalculator
 {
-    private Integer[][] rayBuffer;
+    private Integer[][] buffer;
     private Integer[][] visitedPoints;
     public Hashtable<Long, Integer> registeredLines;
     private int dimensionX;
@@ -20,7 +20,7 @@ public class FitnessCalculator
     {
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
-        this.rayBuffer = rayBuffer;
+        this.buffer = rayBuffer;
         this.visitedPoints = new Integer[dimensionX][dimensionY];
     }
 
@@ -30,11 +30,13 @@ public class FitnessCalculator
     public void ScanBuffer()
     {
         long id = 0;
-        for (int yy = 0; yy < this.dimensionX; yy++)
-            for (int xx = 0; xx < this.dimensionX; xx++) {
-                if (this.rayBuffer[xx][yy] == 1) {
-                    if (!hasVisitedPoint(xx, yy))
-                        ScanLine(xx, yy, id++, 0);
+        for (int y = 0; y < this.dimensionX; y++)
+            for (int x = 0; x < this.dimensionX; x++)
+            {
+                if (this.buffer[x][y] == 1)
+                {
+                    if (!hasVisitedPoint(x, y))
+                        ScanLine(x, y, id++, 0);
                 }
             }
     }
@@ -141,7 +143,7 @@ public class FitnessCalculator
         if ((x + xOffset) < 0)
             return 0;
 
-        return this.rayBuffer[x + xOffset][y + yOffset];
+        return this.buffer[x + xOffset][y + yOffset];
 
     }
 
@@ -161,8 +163,8 @@ public class FitnessCalculator
         while(enumKey.hasMoreElements())
         {
             Long key = enumKey.nextElement();
-            int val = this.registeredLines.get(key);
-            totalLength += val;
+            int value = this.registeredLines.get(key);
+            totalLength += value;
         }
 
         fitnessScore = numberOfLines * totalLength;
