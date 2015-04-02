@@ -153,6 +153,28 @@ public class FitnessCalculator
 
     }
 
+
+    /**
+     *
+      * @return
+     */
+    public long getMarkedBits()
+    {
+        long counter = 0;
+
+        for (int y = 0; y < this.dimensionX; y++)
+            for (int x = 0; x < this.dimensionX; x++)
+            {
+                if (this.buffer[x][y] == 1)
+                {
+                    counter ++;
+                }
+            }
+
+        return counter;
+    }
+
+
     /**
      *
      * @return
@@ -173,7 +195,18 @@ public class FitnessCalculator
             totalLength += value;
         }
 
-        fitnessScore = numberOfLines * totalLength;
+        long searchSpace = this.dimensionX * this.dimensionY;
+        long markedBits = getMarkedBits();
+
+        // Try to keep ratio between 40% - 60% of marked bits. Reward buffers in this zone.
+
+        fitnessScore = totalLength - numberOfLines;
+
+        double percentageMarkedBits = (markedBits / searchSpace) * 100;
+        if ( percentageMarkedBits >= 40.0 && percentageMarkedBits <= 60.0)
+        {
+            fitnessScore += fitnessScore * percentageMarkedBits;
+        }
 
         return fitnessScore;
     }

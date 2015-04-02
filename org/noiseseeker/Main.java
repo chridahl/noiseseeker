@@ -4,14 +4,17 @@ public class Main
 {
     public static void main(String[] args)
     {
-        NoiseHelper noiseHelper = new NoiseHelper(8, 255);
-        FitnessCalculator fitnessCalculator = new FitnessCalculator();
-        Integer[] values = new Integer[]{0,0,0,0,0,0,0,0};
         // Current leader has fitness 147.0 and  0 0 0 0 5 173 254 191
         // Current leader has fitness 384.0 and  0 0 0 0 5 190 175 207
         // Current leader has fitness 432.0 and  0 0 0 0 5 250 255 255
         // Current leader has fitness 440.0 and  0 0 0 0 5 254 255 255
+        // The winner with max fitness of 440.0 is  0 0 0 0 3 250 255 255
 
+
+        NoiseHelper noiseHelper = new NoiseHelper(8, 255);
+        FitnessCalculator fitnessCalculator = new FitnessCalculator();
+
+        Integer[] values = new Integer[]{0,0,0,0,0,0,0,0};
         String currentMaxFitnessBuffer = "";
         Integer[] currentMaxFitnessValues = new Integer[]{};
         double currentMaxFitnessValue = 0;
