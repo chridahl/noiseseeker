@@ -6,7 +6,7 @@ public class Main
     {
         NoiseHelper noiseHelper = new NoiseHelper(8, 255);
         FitnessCalculator fitnessCalculator = new FitnessCalculator();
-        Integer[] values = new Integer[]{0,0,0,0,5,173,254,191};
+        Integer[] values = new Integer[]{0,0,0,0,0,0,0,0};
         // Current leader has fitness 147.0 and  0 0 0 0 5 173 254 191
         // Current leader has fitness 384.0 and  0 0 0 0 5 190 175 207
         // Current leader has fitness 432.0 and  0 0 0 0 5 250 255 255
@@ -22,7 +22,7 @@ public class Main
             noiseHelper.setupCellsFromArray(values);
             Integer[][] buffer = noiseHelper.getCurrentBuffer();
 
-            fitnessCalculator.SetBuffer(noiseHelper.getNumberOfCells(), noiseHelper.getNumberOfCells(), buffer);
+            fitnessCalculator.setBuffer(noiseHelper.getNumberOfCells(), noiseHelper.getNumberOfCells(), buffer);
             fitnessCalculator.scanBuffer();
 
             double fitnessValue = fitnessCalculator.calculateFitnessScore();
@@ -32,6 +32,9 @@ public class Main
                 currentMaxFitnessValue = fitnessValue;
                 currentMaxFitnessBuffer = noiseHelper.intArrayGetString(values);
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
+
+                String pngFilename = String.format("pngs/test-%1s.png", i);
+                noiseHelper.writeBlackAndWhiteImageFileFromBuffer(20, 20, buffer, pngFilename);
             }
         }
 

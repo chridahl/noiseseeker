@@ -16,7 +16,13 @@ public class FitnessCalculator
         registeredLines = new Hashtable();
     }
 
-    public void SetBuffer(int dimensionX, int dimensionY, Integer[][] rayBuffer)
+    /**
+     *
+     * @param dimensionX
+     * @param dimensionY
+     * @param rayBuffer
+     */
+    public void setBuffer(int dimensionX, int dimensionY, Integer[][] rayBuffer)
     {
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;

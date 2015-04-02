@@ -1,6 +1,14 @@
 package org.noiseseeker;
 
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Various helper functions
  */
@@ -185,4 +193,48 @@ public class NoiseHelper
 
         return stringBuilder.toString();
     }
+
+
+    /**
+     *
+     * @param noiseValues
+     * @param filename
+     */
+    public void writeBlackAndWhiteImageFileFromNoiseValues(Integer[] noiseValues, String filename)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     *
+     * @param buffer
+     * @param filename
+     */
+    public void writeBlackAndWhiteImageFileFromBuffer(int xScale, int yScale, Integer[][] buffer, String filename)
+    {
+        BufferedImage bufferedImage = new BufferedImage(this.getNumberOfCells()*xScale, this.getNumberOfCells()*yScale, BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = bufferedImage.getGraphics();
+
+        for (int y = 0; y < numberOfCells; y++)
+            for (int x = 0; x < numberOfCells; x++)
+            {
+                if ( getBitFromCells(y, x) == 1 )
+                {
+                    graphics.fillRect(x * xScale, y * yScale, xScale, yScale);
+                }
+            }
+
+        try
+        {
+            File file = new File(filename);
+            ImageIO.write(bufferedImage, "PNG", file);
+        }
+        catch(IOException ioException)
+        {
+
+        }
+
+
+    }
+
 }
