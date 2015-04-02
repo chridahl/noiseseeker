@@ -27,7 +27,7 @@ public class FitnessCalculator
     /**
      *
      */
-    public void ScanBuffer()
+    public void scanBuffer()
     {
         long id = 0;
         for (int y = 0; y < this.dimensionX; y++)
@@ -36,7 +36,7 @@ public class FitnessCalculator
                 if (this.buffer[x][y] == 1)
                 {
                     if (!hasVisitedPoint(x, y))
-                        ScanLine(x, y, id++, 0);
+                        scanLine(x, y, id++, 0);
                 }
             }
     }
@@ -80,7 +80,7 @@ public class FitnessCalculator
      * @param length
      * @return
      */
-    private int ScanLine(int x, int y, long id, int length)
+    private int scanLine(int x, int y, long id, int length)
     {
         if (this.hasVisitedPoint(x, y))
         {
@@ -94,28 +94,28 @@ public class FitnessCalculator
         registeredLines.put(id, length);
 
         if (getBufferValue(x, y, 1, 0) == 1 && !this.hasVisitedPoint(x + 1, y))
-            return ScanLine(x + 1, y, id, length);
+            return scanLine(x + 1, y, id, length);
 
         if (getBufferValue(x, y, 0, 1) == 1 && !this.hasVisitedPoint(x, y + 1))
-            return ScanLine(x, y + 1, id, length);
+            return scanLine(x, y + 1, id, length);
 
         if (getBufferValue(x, y, -1, 0) == 1 && !this.hasVisitedPoint(x - 1, y))
-            return ScanLine(x - 1, y, id, length);
+            return scanLine(x - 1, y, id, length);
 
         if (getBufferValue(x, y, 1, 1) == 1 && !this.hasVisitedPoint(x + 1, y + 1))
-            return ScanLine(x + 1, y + 1, id, length);
+            return scanLine(x + 1, y + 1, id, length);
 
         if (getBufferValue(x, y, 0, -1) == 1 && !this.hasVisitedPoint(x, y - 1))
-            return ScanLine(x, y - 1, id, length);
+            return scanLine(x, y - 1, id, length);
 
         if (getBufferValue(x, y, -1, -1) == 1 && !this.hasVisitedPoint(x - 1, y - 1))
-            return ScanLine(x - 1, y - 1, id, length);
+            return scanLine(x - 1, y - 1, id, length);
 
         if (getBufferValue(x, y, 1, -1) == 1 && !this.hasVisitedPoint(x + 1, y - 1))
-            return ScanLine(x + 1, y - 1, id, length);
+            return scanLine(x + 1, y - 1, id, length);
 
         if (getBufferValue(x, y, -1, 1) == 1 && !this.hasVisitedPoint(x - 1, y + 1))
-            return ScanLine(x - 1, y + 1, id, length);
+            return scanLine(x - 1, y + 1, id, length);
 
         return length;
     }
@@ -151,7 +151,7 @@ public class FitnessCalculator
      *
      * @return
      */
-    public double CalculateFitnessScore()
+    public double calculateFitnessScore()
     {
         int numberOfLines = this.registeredLines.size();
 

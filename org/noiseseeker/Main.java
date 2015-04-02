@@ -23,9 +23,9 @@ public class Main
             Integer[][] buffer = noiseHelper.getCurrentBuffer();
 
             fitnessCalculator.SetBuffer(noiseHelper.getNumberOfCells(), noiseHelper.getNumberOfCells(), buffer);
-            fitnessCalculator.ScanBuffer();
+            fitnessCalculator.scanBuffer();
 
-            double fitnessValue = fitnessCalculator.CalculateFitnessScore();
+            double fitnessValue = fitnessCalculator.calculateFitnessScore();
 
             if ( fitnessValue > currentMaxFitnessValue)
             {
