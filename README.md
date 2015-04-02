@@ -1,7 +1,6 @@
-# noiseseeker
-==============
+# Noise Seeker
 
-noiseseeker is an algorithm which aims at exploring potential order in noise. More likely than not this project
+Noise Seeker is an algorithm which aims at exploring potential order in noise and chaos. More likely than not this project
 is utterly useless, but the underlying questions raised are nevertheless interesting:
 
 - What are the properties of humanly recognizable 'noise'?
@@ -18,4 +17,18 @@ that are humanly recognizable? Although no parallels can be drawn, a similar que
 Early Results
 --------------
 
+To start off with some sort of benchmark. Consider this randomly generated image:
 
+![Random noise](https://github.com/chridahl/noiseseeker/blob/master/imgs/test-999999.png?raw=true "Random noise")
+
+I'm sure most people will get fairly little enjoyment out of watching that picture. The next image is also generated,
+but has been through a small fitness function:
+
+![Shapeish 1](https://github.com/chridahl/noiseseeker/blob/master/imgs/test-66781182.png?raw=true "Shapeish 1")
+
+The image holds little resemblance to anything in the real world, however we can say that it 'feels less noisy' to look at.
+It also looks less 'random'. Now for the final generated image:
+
+![Shapeish 2](https://github.com/chridahl/noiseseeker/blob/master/imgs/test-89462.png?raw=true "Shapeish 2")
+
+It certainly looks more recognizable to something unknown than compared to the other two images.
