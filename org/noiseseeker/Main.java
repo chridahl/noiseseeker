@@ -9,7 +9,7 @@ public class Main
         // Current leader has fitness 432.0 and  0 0 0 0 5 250 255 255
         // Current leader has fitness 440.0 and  0 0 0 0 5 254 255 255
         // The winner with max fitness of 440.0 is  0 0 0 0 3 250 255 255
-
+        // The winner with max fitness of 47.0 is  0 0 0 0 3 250 255 255
 
         NoiseHelper noiseHelper = new NoiseHelper(8, 255);
         FitnessCalculator fitnessCalculator = new FitnessCalculator();
