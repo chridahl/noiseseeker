@@ -55,11 +55,13 @@ public class NoiseHelper
      *
      * @return
      */
-    public Integer[][] getCurrentBuffer() {
+    public Integer[][] getCurrentBuffer()
+    {
         Integer[][] arrayTemp = new Integer[16][16];
 
         for (int y = 0; y < numberOfCells; y++)
-            for (int x = 0; x < numberOfCells; x++) {
+            for (int x = 0; x < numberOfCells; x++)
+            {
                 arrayTemp[x][y] = getBitFromCells(y, x);
             }
 
@@ -99,8 +101,10 @@ public class NoiseHelper
     public void printBuffer(Integer[][] buffer)
     {
         for (int y = 0; y < numberOfCells; y++)
-            for (int x = 0; x < numberOfCells; x++) {
+            for (int x = 0; x < numberOfCells; x++)
+            {
                 System.out.print(buffer[x][y] + "");
+                
                 if ( x == numberOfCells - 1)
                     System.out.println("");
             }
