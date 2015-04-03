@@ -12,14 +12,16 @@ public class Main
         // The winner with max fitness of 47.0 is  0 0 0 0 3 250 255 255
 
         NoiseHelper noiseHelper = new NoiseHelper(8, 255);
-        FitnessCalculator fitnessCalculator = new FitnessCalculator();
+        FitnessCalculator fitnessCalculator = new LinesFitnessCalculator();
 
         Integer[] values = new Integer[]{0,0,0,0,0,0,0,0};
         String currentMaxFitnessBuffer = "";
         Integer[] currentMaxFitnessValues = new Integer[]{};
         double currentMaxFitnessValue = 0;
 
-        for(long i = 0; i<99999999L; i++)
+        // Looping on a scalar value makes little sense here. If we are to scale up the buffer (e.g. 16 x 16) the
+        // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
+        for(;;)
         {
             noiseHelper.intArrayNext(values);
             noiseHelper.setupCellsFromArray(values);
@@ -36,12 +38,10 @@ public class Main
                 currentMaxFitnessBuffer = noiseHelper.intArrayGetString(values);
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
-                String pngFilename = String.format("pngs/test-%1s.png", i);
+                String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
                 noiseHelper.writeBlackAndWhiteImageFileFromBuffer(20, 20, buffer, pngFilename);
             }
         }
-
-        System.out.println("The winner with max fitness of " + currentMaxFitnessValue + " is " + currentMaxFitnessBuffer);
     }
 }
 
