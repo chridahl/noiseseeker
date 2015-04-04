@@ -93,6 +93,24 @@ public class NoiseBuffer
 
     /**
      *
+     * @param numberOfUnits
+     * @param bitString
+     */
+    public static Integer[][] BitBufferFromString(int numberOfUnits, String bitString)
+    {
+        Integer[][] arrayTemp = new Integer[numberOfUnits][numberOfUnits];
+
+        for (int y = 0; y < numberOfUnits; y++)
+            for (int x = 0; x < numberOfUnits; x++)
+            {
+                arrayTemp[x][y] = Integer.parseInt(bitString.charAt(y*numberOfUnits+x)+"");
+            }
+
+        return arrayTemp;
+    }
+
+    /**
+     *
      * @param buffer
      */
     public static void Print(int numberOfUnits, Integer[][] buffer)

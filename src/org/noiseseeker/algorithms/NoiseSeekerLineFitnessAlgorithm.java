@@ -1,6 +1,7 @@
-package org.noiseseeker;
+package org.noiseseeker.algorithms;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
+import org.noiseseeker.fitnesscalculators.BitBufferFitnessCalculator;
 import org.noiseseeker.helpers.AnyBaseNumber;
 import org.noiseseeker.helpers.NoiseBuffer;
 import org.noiseseeker.helpers.NumberToMedia;

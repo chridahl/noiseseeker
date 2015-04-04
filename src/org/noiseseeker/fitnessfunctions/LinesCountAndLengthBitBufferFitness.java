@@ -1,6 +1,6 @@
 package org.noiseseeker.fitnessfunctions;
 
-import org.noiseseeker.BitBufferFitnessCalculator;
+import org.noiseseeker.fitnesscalculators.BitBufferFitnessCalculator;
 import org.noiseseeker.analyzers.LinesAnalyzer;
 
 import java.util.Enumeration;

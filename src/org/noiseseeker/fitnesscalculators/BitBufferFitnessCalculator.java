@@ -1,4 +1,4 @@
-package org.noiseseeker;
+package org.noiseseeker.fitnesscalculators;
 
 import java.util.Hashtable;
 
