@@ -62,9 +62,9 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
         String currentMaxFitnessBuffer;
 
         for(int startNumberIterator = 0; startNumberIterator < numberOfUnits; startNumberIterator++)
-        {
             values[startNumberIterator] = Integer.parseInt(startNumber[startNumberIterator]);
-        }
+
+        long filenameIdIterator = 0L;
 
         for(;;)
         {
@@ -77,13 +77,13 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
 
                 double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
 
-                if ( fitnessValue > currentMaxFitnessValue)
+                if ( fitnessValue > 20)
                 {
                     currentMaxFitnessValue = fitnessValue;
                     currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfUnits, values);
                     System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
-                    String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
+                    String pngFilename = String.format("pngs/test-%1s.png", filenameIdIterator++);
                     NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
                 }
 
