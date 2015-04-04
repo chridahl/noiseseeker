@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Main
 {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         File configurationFile = new File("application.properties");
         PropertiesConfiguration applicationProperties = new PropertiesConfiguration();
