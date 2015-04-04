@@ -18,7 +18,8 @@ public class Main
         try
         {
             applicationProperties.load(configurationFile);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             System.out.println("Could not open and/or read application.properties");
             System.exit(1);
