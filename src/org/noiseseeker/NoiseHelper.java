@@ -84,7 +84,7 @@ public class NoiseHelper
      * @param columnIndex
      * @return
      */
-    private int getBitFromCells(int rowIndex, int columnIndex)
+    public int getBitFromCells(int rowIndex, int columnIndex)
     {
         int number = this.rows[rowIndex];
 
@@ -247,31 +247,6 @@ public class NoiseHelper
      */
     public void writeBlackAndWhiteImageFileFromBuffer(int xScale, int yScale, Integer[][] buffer, String filename)
     {
-        BufferedImage bufferedImage = new BufferedImage(this.getNumberOfCells()*xScale, this.getNumberOfCells()*yScale, BufferedImage.TYPE_INT_RGB);
-
-        Graphics graphics = bufferedImage.getGraphics();
-        graphics.setColor(Color.white);
-        graphics.fillRect(0, 0, this.getNumberOfCells()*xScale, this.getNumberOfCells()*yScale);
-        graphics.setColor(Color.black);
-
-        for (int y = 0; y < numberOfCells; y++)
-            for (int x = 0; x < numberOfCells; x++)
-            {
-                if ( getBitFromCells(y, x) == 1 )
-                {
-                    graphics.fillRect(x * xScale, y * yScale, xScale, yScale);
-                }
-            }
-
-        try
-        {
-            File file = new File(filename);
-            ImageIO.write(bufferedImage, "PNG", file);
-        }
-        catch(IOException ioException)
-        {
-            // We are not gonna handle this exception.
-        }
 
 
     }

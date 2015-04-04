@@ -18,6 +18,8 @@ public class NoiseSeekerLineFitnessExperiment implements INoiseSeekerExperiment
     {
         int numberOfCells = this.applicationProperties.getInt("Cells");
         int maxCellSize = this.applicationProperties.getInt("MaxCellSize");
+        int pngWidth = this.applicationProperties.getInt("PNGWidth");
+        int pngHeight = this.applicationProperties.getInt("PNGHeight");
         String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
         NoiseHelper noiseHelper = new NoiseHelper(numberOfCells, maxCellSize);
@@ -52,7 +54,8 @@ public class NoiseSeekerLineFitnessExperiment implements INoiseSeekerExperiment
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                noiseHelper.writeBlackAndWhiteImageFileFromBuffer(20, 20, buffer, pngFilename);
+                NumberToMedia.CreatePNG(noiseHelper, numberOfCells, pngWidth, pngHeight, buffer, pngFilename);
+
             }
         }
 
