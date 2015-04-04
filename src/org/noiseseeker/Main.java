@@ -15,12 +15,16 @@ public class Main
         File configurationFile = new File("application.properties");
         PropertiesConfiguration applicationProperties = new PropertiesConfiguration();
 
-        try {
+        try
+        {
             applicationProperties.load(configurationFile);
-        } catch (Exception exception) {
+        } catch (Exception exception)
+        {
             System.out.println("Could not open and/or read application.properties");
             System.exit(1);
         }
+
+        // Setup and run all experiments
 
         List<INoiseSeekerExperiment> experiments = new ArrayList<INoiseSeekerExperiment>();
         experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
