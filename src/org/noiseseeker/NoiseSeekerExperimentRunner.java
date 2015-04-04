@@ -7,7 +7,8 @@ public class NoiseSeekerExperimentRunner
     private AbstractFileConfiguration applicationProperties;
     private FitnessCalculator fitnessCalculator;
 
-    public NoiseSeekerExperimentRunner(AbstractFileConfiguration applicationProperties, FitnessCalculator fitnessCalculator)
+    public NoiseSeekerExperimentRunner(AbstractFileConfiguration applicationProperties,
+                                       FitnessCalculator fitnessCalculator)
     {
         this.applicationProperties = applicationProperties;
         this.fitnessCalculator = fitnessCalculator;
