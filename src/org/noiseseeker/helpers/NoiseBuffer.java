@@ -1,16 +1,13 @@
 package org.noiseseeker.helpers;
 
 
-/**
- * Various helper functions
- */
-public class NoiseHelper
+public class NoiseBuffer
 {
     private Integer rows[];
     private int maxCellValue;
     private int numberOfCells;
 
-    public NoiseHelper(int numberOfCells, int maxCellValue)
+    public NoiseBuffer(int numberOfCells, int maxCellValue)
     {
         this.numberOfCells = numberOfCells;
         this.maxCellValue = maxCellValue;
@@ -55,14 +52,14 @@ public class NoiseHelper
      *
      * @return
      */
-    public Integer[][] getCurrentBuffer()
+    public Integer[][] getBitBuffer()
     {
         Integer[][] arrayTemp = new Integer[this.numberOfCells][this.numberOfCells];
 
         for (int y = 0; y < numberOfCells; y++)
             for (int x = 0; x < numberOfCells; x++)
             {
-                arrayTemp[x][y] = getBitFromCells(y, x);
+                arrayTemp[x][y] = getBitAtRowAndCloumn(y, x);
             }
 
         return arrayTemp;
@@ -74,7 +71,7 @@ public class NoiseHelper
      * @param columnIndex
      * @return
      */
-    public int getBitFromCells(int rowIndex, int columnIndex)
+    public int getBitAtRowAndCloumn(int rowIndex, int columnIndex)
     {
         int number = this.rows[rowIndex];
 
@@ -98,7 +95,7 @@ public class NoiseHelper
      *
      * @param buffer
      */
-    public void printBuffer(Integer[][] buffer)
+    public void print(Integer[][] buffer)
     {
         for (int y = 0; y < numberOfCells; y++)
             for (int x = 0; x < numberOfCells; x++)

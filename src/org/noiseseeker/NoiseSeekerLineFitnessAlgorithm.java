@@ -2,7 +2,7 @@ package org.noiseseeker;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.noiseseeker.helpers.AnyBaseNumber;
-import org.noiseseeker.helpers.NoiseHelper;
+import org.noiseseeker.helpers.NoiseBuffer;
 import org.noiseseeker.helpers.NumberToMedia;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
@@ -20,14 +20,13 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 
     public void run()
     {
-
         int numberOfCells = this.applicationProperties.getInt("Cells");
         int maxCellSize = this.applicationProperties.getInt("MaxCellSize");
         int pngWidth = this.applicationProperties.getInt("PNGWidth");
         int pngHeight = this.applicationProperties.getInt("PNGHeight");
         String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
-        NoiseHelper noiseHelper = new NoiseHelper(numberOfCells, maxCellSize);
+        NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfCells, maxCellSize);
 
         Integer[] values = new Integer[numberOfCells];
         Integer[] currentMaxFitnessNumber = new Integer[numberOfCells];
@@ -39,16 +38,15 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
             values[startNumberIterator] = Integer.parseInt(startNumber[startNumberIterator]);
         }
 
-
         // Looping on a scalar value makes little sense here. If we are to scale up the buffer (e.g. 16 x 16) the
         // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
         for(;;)
         {
             AnyBaseNumber.NextValue(numberOfCells, maxCellSize, values);
-            noiseHelper.setupCellsFromArray(values);
-            Integer[][] buffer = noiseHelper.getCurrentBuffer();
+            noiseBuffer.setupCellsFromArray(values);
+            Integer[][] buffer = noiseBuffer.getBitBuffer();
 
-            fitnessCalculator.setBuffer(noiseHelper.getNumberOfCells(), noiseHelper.getNumberOfCells(), buffer);
+            fitnessCalculator.setBuffer(noiseBuffer.getNumberOfCells(), noiseBuffer.getNumberOfCells(), buffer);
             fitnessCalculator.scanBuffer();
 
             double fitnessValue = fitnessCalculator.calculateFitnessScore();
@@ -60,7 +58,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                NumberToMedia.CreatePNG(noiseHelper, numberOfCells, pngWidth, pngHeight, pngFilename);
+                NumberToMedia.CreatePNG(noiseBuffer, numberOfCells, pngWidth, pngHeight, pngFilename);
 
             }
         }
