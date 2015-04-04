@@ -20,17 +20,25 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
     }
 
 
+    /**
+     * Skip values that contribute to long bit rows (1111 1111 etc.)
+     * @param values
+     * @return
+     */
     public boolean shouldSkipValue(Integer[] values)
     {
         for(int value : values)
-        if ( value == 256
-                || value == 254
-                || value == 252
-                || value == 248
-                || value == 240
-                || value == 15
-                || value == 7)
-            return true;
+            if ( value == 255
+                        || value == 254
+                        || value == 252
+                        || value == 248
+                        || value == 240
+                        || value == 127
+                        || value == 63
+                        || value == 31
+                        || value == 15
+                        || value == 7)
+                return true;
 
         return false;
     }
@@ -58,8 +66,6 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
             values[startNumberIterator] = Integer.parseInt(startNumber[startNumberIterator]);
         }
 
-        // Looping on a scalar value makes little sense here. If we are to scale up the bitBuffer (e.g. 16 x 16) the
-        // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
         for(;;)
         {
             AnyBaseNumber.NextValue(numberOfUnits, base, values);

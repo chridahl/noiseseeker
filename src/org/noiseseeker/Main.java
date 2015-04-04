@@ -3,6 +3,7 @@ package org.noiseseeker;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.noiseseeker.algorithms.DistanceBetweenLettersAlgorithm;
 import org.noiseseeker.algorithms.NoiseSeekerLineFitnessAlgorithm;
+import org.noiseseeker.algorithms.SeekLinesButSkipCertainValues;
 import org.noiseseeker.fitnessfunctions.LinesCountAndLengthBitBufferFitness;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
@@ -32,7 +33,7 @@ public class Main
 
         List<INoiseSeekerExperiment> experiments = new ArrayList<INoiseSeekerExperiment>();
         //experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
-        experiments.add(new DistanceBetweenLettersAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
+        experiments.add(new SeekLinesButSkipCertainValues(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
 
         try
         {
