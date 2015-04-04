@@ -5,5 +5,5 @@ package org.noiseseeker.interfaces;
  */
 public interface INoiseSeekerExperiment
 {
-    void run();
+    void run() throws Exception;
 }

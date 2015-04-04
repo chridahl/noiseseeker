@@ -7,17 +7,34 @@ import org.noiseseeker.helpers.NoiseBuffer;
 import org.noiseseeker.helpers.NumberToMedia;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
-public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
+public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
 {
     private AbstractFileConfiguration applicationProperties;
     private BitBufferFitnessCalculator bitBufferLinesFitnessCalculator;
 
-    public NoiseSeekerLineFitnessAlgorithm(AbstractFileConfiguration applicationProperties,
+    public SeekLinesButSkipCertainValues(AbstractFileConfiguration applicationProperties,
                                            BitBufferFitnessCalculator bitBufferFitnessCalculator)
     {
         this.applicationProperties = applicationProperties;
         this.bitBufferLinesFitnessCalculator = bitBufferFitnessCalculator;
     }
+
+
+    public boolean shouldSkipValue(Integer[] values)
+    {
+        for(int value : values)
+        if ( value == 256
+                || value == 254
+                || value == 252
+                || value == 248
+                || value == 240
+                || value == 15
+                || value == 7)
+            return true;
+
+        return false;
+    }
+
 
     public void run() throws Exception
     {
@@ -27,7 +44,8 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
         int pngHeight = this.applicationProperties.getInt("PNGHeight");
         String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
-
+        if ( numberOfUnits != 8 && base != 256)
+            throw new Exception("SeekLinesButSkipCertainValues will only work with base 256 and 8 as number of units.");
 
         NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfUnits, base);
         Integer[] values = new Integer[numberOfUnits];
@@ -45,19 +63,23 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
         for(;;)
         {
             AnyBaseNumber.NextValue(numberOfUnits, base, values);
-            noiseBuffer.setupCellsFromArray(values);
-            Integer[][] buffer = noiseBuffer.getBitBuffer();
 
-            double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
-
-            if ( fitnessValue > currentMaxFitnessValue)
+            if ( !shouldSkipValue(values))
             {
-                currentMaxFitnessValue = fitnessValue;
-                currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfUnits, values);
-                System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
+                noiseBuffer.setupCellsFromArray(values);
+                Integer[][] buffer = noiseBuffer.getBitBuffer();
 
-                String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
+                double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
+
+                if ( fitnessValue > currentMaxFitnessValue)
+                {
+                    currentMaxFitnessValue = fitnessValue;
+                    currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfUnits, values);
+                    System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
+
+                    String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
+                    NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
+                }
 
             }
         }

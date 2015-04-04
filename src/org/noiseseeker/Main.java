@@ -34,9 +34,17 @@ public class Main
         //experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
         experiments.add(new DistanceBetweenLettersAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
 
-        for (INoiseSeekerExperiment experiment : experiments)
+        try
         {
-            experiment.run();
+            for (INoiseSeekerExperiment experiment : experiments)
+            {
+                experiment.run();
+            }
+        }
+        catch(Exception exception)
+        {
+            System.out.println("Experiment failed with " + exception.toString());
+            System.exit(1);
         }
 
     }
