@@ -2,13 +2,13 @@ package org.noiseseeker;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 
-public class NoiseSeekerLineFitnessExperiment implements INoiseSeekerExperiment
+public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 {
     private AbstractFileConfiguration applicationProperties;
     private FitnessCalculator fitnessCalculator;
 
-    public NoiseSeekerLineFitnessExperiment(AbstractFileConfiguration applicationProperties,
-                                            FitnessCalculator fitnessCalculator)
+    public NoiseSeekerLineFitnessAlgorithm(AbstractFileConfiguration applicationProperties,
+                                           FitnessCalculator fitnessCalculator)
     {
         this.applicationProperties = applicationProperties;
         this.fitnessCalculator = fitnessCalculator;
@@ -54,7 +54,7 @@ public class NoiseSeekerLineFitnessExperiment implements INoiseSeekerExperiment
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                NumberToMedia.CreatePNG(noiseHelper, numberOfCells, pngWidth, pngHeight, buffer, pngFilename);
+                NumberToMedia.CreatePNG(noiseHelper, numberOfCells, pngWidth, pngHeight, pngFilename);
 
             }
         }

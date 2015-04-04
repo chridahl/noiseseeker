@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class NumberToMedia
 {
-    public static void CreatePNG(NoiseHelper noiseHelper, int numberOfCells, int pngWidth, int pngHeight, Integer[][] buffer, String pngFilename)
+    public static void CreatePNG(NoiseHelper noiseHelper, int numberOfCells, int pngWidth, int pngHeight, String pngFilename)
     {
         BufferedImage bufferedImage = new BufferedImage(numberOfCells*pngWidth,numberOfCells*pngHeight, BufferedImage.TYPE_INT_RGB);
 

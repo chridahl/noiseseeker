@@ -23,7 +23,7 @@ public class Main
         }
 
         FitnessCalculator lineFitnessCalculator = new LinesCountAndLengthFitnessCalculator();
-        NoiseSeekerLineFitnessExperiment lineFitnessExperiment = new NoiseSeekerLineFitnessExperiment(applicationProperties, lineFitnessCalculator);
+        NoiseSeekerLineFitnessAlgorithm lineFitnessExperiment = new NoiseSeekerLineFitnessAlgorithm(applicationProperties, lineFitnessCalculator);
         lineFitnessExperiment.run();
     }
 }
