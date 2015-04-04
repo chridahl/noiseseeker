@@ -1,45 +1,59 @@
-package org.noiseseeker;
+package org.noiseseeker.analyzers;
 
-import java.util.Enumeration;
+import org.noiseseeker.helpers.NoiseBuffer;
+
 import java.util.Hashtable;
 
-public abstract class FitnessCalculator
+/**
+ * Created by cdk on 04.04.2015.
+ */
+public class LinesAnalyzer
 {
-    protected Integer[][] buffer;
+    protected int width;
+    protected int height;
+    protected Integer[][] bitBuffer;
     protected Integer[][] visitedPoints;
-    public Hashtable<Long, Integer> registeredLines;
-    protected int dimensionX;
-    protected int dimensionY;
+    public Hashtable<Long, Integer> detectedLines;
 
-    public FitnessCalculator()
+    public LinesAnalyzer()
     {
-        registeredLines = new Hashtable();
+        detectedLines = new Hashtable();
     }
 
     /**
      *
-     * @param dimensionX
-     * @param dimensionY
-     * @param rayBuffer
+     * @param width
+     * @param height
+     * @param bitBuffer
      */
-    public void setBuffer(int dimensionX, int dimensionY, Integer[][] rayBuffer)
+    public void setBitBuffer(int width, int height, Integer[][] bitBuffer)
     {
-        this.dimensionX = dimensionX;
-        this.dimensionY = dimensionY;
-        this.buffer = rayBuffer;
-        this.visitedPoints = new Integer[dimensionX][dimensionY];
+        this.width = width;
+        this.height = height;
+        this.bitBuffer = bitBuffer;
+        this.visitedPoints = new Integer[width][height];
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Hashtable<Long, Integer> getDetectedLines() {
+
+        return this.detectedLines;
     }
 
     /**
      *
      */
-    public void scanBuffer()
+    public void analyze()
     {
         long id = 0;
-        for (int y = 0; y < this.dimensionX; y++)
-            for (int x = 0; x < this.dimensionX; x++)
+        for (int y = 0; y < this.width; y++)
+            for (int x = 0; x < this.width; x++)
             {
-                if (this.buffer[x][y] == 1)
+                if (this.bitBuffer[x][y] == 1)
                 {
                     if (!hasVisitedPoint(x, y))
                         scanLine(x, y, id++, 0);
@@ -97,30 +111,30 @@ public abstract class FitnessCalculator
 
         length = length + 1;
 
-        registeredLines.put(id, length);
+        this.detectedLines.put(id, length);
 
-        if (getBufferValue(x, y, 1, 0) == 1 && !this.hasVisitedPoint(x + 1, y))
+        if (getBitBufferValue(x, y, 1, 0) == 1 && !this.hasVisitedPoint(x + 1, y))
             return scanLine(x + 1, y, id, length);
 
-        if (getBufferValue(x, y, 0, 1) == 1 && !this.hasVisitedPoint(x, y + 1))
+        if (getBitBufferValue(x, y, 0, 1) == 1 && !this.hasVisitedPoint(x, y + 1))
             return scanLine(x, y + 1, id, length);
 
-        if (getBufferValue(x, y, -1, 0) == 1 && !this.hasVisitedPoint(x - 1, y))
+        if (getBitBufferValue(x, y, -1, 0) == 1 && !this.hasVisitedPoint(x - 1, y))
             return scanLine(x - 1, y, id, length);
 
-        if (getBufferValue(x, y, 1, 1) == 1 && !this.hasVisitedPoint(x + 1, y + 1))
+        if (getBitBufferValue(x, y, 1, 1) == 1 && !this.hasVisitedPoint(x + 1, y + 1))
             return scanLine(x + 1, y + 1, id, length);
 
-        if (getBufferValue(x, y, 0, -1) == 1 && !this.hasVisitedPoint(x, y - 1))
+        if (getBitBufferValue(x, y, 0, -1) == 1 && !this.hasVisitedPoint(x, y - 1))
             return scanLine(x, y - 1, id, length);
 
-        if (getBufferValue(x, y, -1, -1) == 1 && !this.hasVisitedPoint(x - 1, y - 1))
+        if (getBitBufferValue(x, y, -1, -1) == 1 && !this.hasVisitedPoint(x - 1, y - 1))
             return scanLine(x - 1, y - 1, id, length);
 
-        if (getBufferValue(x, y, 1, -1) == 1 && !this.hasVisitedPoint(x + 1, y - 1))
+        if (getBitBufferValue(x, y, 1, -1) == 1 && !this.hasVisitedPoint(x + 1, y - 1))
             return scanLine(x + 1, y - 1, id, length);
 
-        if (getBufferValue(x, y, -1, 1) == 1 && !this.hasVisitedPoint(x - 1, y + 1))
+        if (getBitBufferValue(x, y, -1, 1) == 1 && !this.hasVisitedPoint(x - 1, y + 1))
             return scanLine(x - 1, y + 1, id, length);
 
         return length;
@@ -134,44 +148,23 @@ public abstract class FitnessCalculator
      * @param yOffset
      * @return
      */
-    private int getBufferValue(int x, int y, int xOffset, int yOffset)
+    private int getBitBufferValue(int x, int y, int xOffset, int yOffset)
     {
 
-        if ((y + yOffset) >= this.dimensionY)
+        if ((y + yOffset) >= this.height)
             return 0;
 
         if ((y + yOffset) < 0)
             return 0;
 
-        if ((x + xOffset) >= this.dimensionX)
+        if ((x + xOffset) >= this.width)
             return 0;
 
         if ((x + xOffset) < 0)
             return 0;
 
-        return this.buffer[x + xOffset][y + yOffset];
+        return this.bitBuffer[x + xOffset][y + yOffset];
 
-    }
-
-
-    /**
-     *
-      * @return
-     */
-    public long getMarkedBits()
-    {
-        long counter = 0;
-
-        for (int y = 0; y < this.dimensionX; y++)
-            for (int x = 0; x < this.dimensionX; x++)
-            {
-                if (this.buffer[x][y] == 1)
-                {
-                    counter ++;
-                }
-            }
-
-        return counter;
     }
 
 
@@ -179,6 +172,19 @@ public abstract class FitnessCalculator
      *
      * @return
      */
-    public abstract double calculateFitnessScore();
+    public long getNumberOfBits()
+    {
+        long counter = 0;
 
+        for (int y = 0; y < this.width; y++)
+            for (int x = 0; x < this.width; x++)
+            {
+                if (this.bitBuffer[x][y] == 1)
+                {
+                    counter ++;
+                }
+            }
+
+        return counter;
+    }
 }

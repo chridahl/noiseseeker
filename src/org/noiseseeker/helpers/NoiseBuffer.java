@@ -4,17 +4,17 @@ package org.noiseseeker.helpers;
 public class NoiseBuffer
 {
     private Integer rows[];
-    private int maxCellValue;
-    private int numberOfCells;
+    private int base;
+    private int numberOfUnits;
 
-    public NoiseBuffer(int numberOfCells, int maxCellValue)
+    public NoiseBuffer(int numberOfUnits, int base)
     {
-        this.numberOfCells = numberOfCells;
-        this.maxCellValue = maxCellValue;
+        this.numberOfUnits = numberOfUnits;
+        this.base = base;
 
-        this.rows = new Integer[this.numberOfCells];
+        this.rows = new Integer[this.numberOfUnits];
 
-        for (int iterator = 0; iterator < this.numberOfCells; iterator++)
+        for (int iterator = 0; iterator < this.numberOfUnits; iterator++)
         {
             this.rows[iterator] = 0;
         }
@@ -24,18 +24,18 @@ public class NoiseBuffer
      *
      * @return
      */
-    public int getNumberOfCells()
+    public int getNumberOfUnits()
     {
-        return this.numberOfCells;
+        return this.numberOfUnits;
     }
 
     /**
      *
      * @return
      */
-    public int getMaxCellValue()
+    public int getBase()
     {
-        return this.maxCellValue;
+        return this.base;
     }
 
     /**
@@ -54,10 +54,10 @@ public class NoiseBuffer
      */
     public Integer[][] getBitBuffer()
     {
-        Integer[][] arrayTemp = new Integer[this.numberOfCells][this.numberOfCells];
+        Integer[][] arrayTemp = new Integer[this.numberOfUnits][this.numberOfUnits];
 
-        for (int y = 0; y < numberOfCells; y++)
-            for (int x = 0; x < numberOfCells; x++)
+        for (int y = 0; y < numberOfUnits; y++)
+            for (int x = 0; x < numberOfUnits; x++)
             {
                 arrayTemp[x][y] = getBitAtRowAndCloumn(y, x);
             }
@@ -75,12 +75,12 @@ public class NoiseBuffer
     {
         int number = this.rows[rowIndex];
 
-        // Hack code to get a full-sized bit string (size of numberOfCells)
+        // Hack code to get a full-sized bit string (size of numberOfUnits)
         String s = Integer.toBinaryString(number);
 
-        if ( s.length() != numberOfCells)
+        if ( s.length() != numberOfUnits)
         {
-            int delta = numberOfCells - s.length();
+            int delta = numberOfUnits - s.length();
             String x = "";
             for(int m=0; m<delta; m++)
             {
@@ -95,22 +95,16 @@ public class NoiseBuffer
      *
      * @param buffer
      */
-    public void print(Integer[][] buffer)
+    public static void Print(int numberOfUnits, Integer[][] buffer)
     {
-        for (int y = 0; y < numberOfCells; y++)
-            for (int x = 0; x < numberOfCells; x++)
+        for (int y = 0; y < numberOfUnits; y++)
+            for (int x = 0; x < numberOfUnits; x++)
             {
                 System.out.print(buffer[x][y] + "");
 
-                if ( x == numberOfCells - 1)
+                if ( x == numberOfUnits - 1)
                     System.out.println("");
             }
 
     }
-
-
-
-
-
-
 }

@@ -11,11 +11,11 @@ public class AnyBaseNumber
      *
      * @param values
      */
-    public static void NextValue(int numberOfCells, int maxCellValue, Integer[] values)
+    public static void NextValue(int numberOfUnits, int base, Integer[] values)
     {
         int cellMinValue = 0;
-        int cellMaxValue = maxCellValue + 1;
-        int cellIndex = numberOfCells - 1;
+        int cellMaxValue = base + 1;
+        int cellIndex = numberOfUnits - 1;
 
         values[cellIndex] = values[cellIndex] + 1;
 
@@ -38,11 +38,11 @@ public class AnyBaseNumber
      * @param values
      * @return
      */
-    public static boolean IsMaxValue(int numberOfCells, int maxCellValue, Integer[] values)
+    public static boolean IsMaxValue(int numberOfUnits, int base, Integer[] values)
     {
         boolean isMax = true;
-        int cells = numberOfCells;
-        int cellMaxValue = maxCellValue;
+        int cells = numberOfUnits;
+        int cellMaxValue = base;
 
         for(int i=0; i<cells; i++)
             if ( values[i] <= cellMaxValue)
@@ -73,10 +73,9 @@ public class AnyBaseNumber
      * @param values
      * @return
      */
-    public static String GetAsString(int numberOfCells, int maxCellValue, Integer[] values)
+    public static String GetAsString(int numberOfCells, Integer[] values)
     {
         int cells = numberOfCells;
-        int cellMaxValue = maxCellValue;
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -95,15 +94,15 @@ public class AnyBaseNumber
      * @param toValues Values to count to.
      * @return The distance between values.
      */
-    public static long Distance(int numberOfCells, int maxCellValue, Integer[] fromValues, Integer[] toValues) {
+    public static long Distance(int numberOfUnits, int base, Integer[] fromValues, Integer[] toValues) {
 
         long distance = 0;
 
-        Integer[] tmpFromValues = new Integer[numberOfCells];
-        Integer[] tmpToValues = new Integer[numberOfCells];
+        Integer[] tmpFromValues = new Integer[numberOfUnits];
+        Integer[] tmpToValues = new Integer[numberOfUnits];
 
-        System.arraycopy(fromValues, 0, tmpFromValues, 0, numberOfCells);
-        System.arraycopy(toValues, 0, tmpToValues, 0, numberOfCells);
+        System.arraycopy(fromValues, 0, tmpFromValues, 0, numberOfUnits);
+        System.arraycopy(toValues, 0, tmpToValues, 0, numberOfUnits);
 
         if (Arrays.equals(tmpFromValues, tmpToValues))
         {
@@ -112,7 +111,7 @@ public class AnyBaseNumber
 
         do
         {
-            AnyBaseNumber.NextValue(numberOfCells, maxCellValue, tmpFromValues);
+            AnyBaseNumber.NextValue(numberOfUnits, base, tmpFromValues);
             distance ++;
         }
         while(!Arrays.equals(tmpFromValues, tmpToValues));

@@ -9,56 +9,52 @@ import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 {
     private AbstractFileConfiguration applicationProperties;
-    private FitnessCalculator fitnessCalculator;
+    private BitBufferFitnessCalculator bitBufferLinesFitnessCalculator;
 
     public NoiseSeekerLineFitnessAlgorithm(AbstractFileConfiguration applicationProperties,
-                                           FitnessCalculator fitnessCalculator)
+                                           BitBufferFitnessCalculator bitBufferFitnessCalculator)
     {
         this.applicationProperties = applicationProperties;
-        this.fitnessCalculator = fitnessCalculator;
+        this.bitBufferLinesFitnessCalculator = bitBufferFitnessCalculator;
     }
 
     public void run()
     {
-        int numberOfCells = this.applicationProperties.getInt("Cells");
-        int maxCellSize = this.applicationProperties.getInt("MaxCellSize");
+        int numberOfUnits = this.applicationProperties.getInt("NumberOfUnits");
+        int base = this.applicationProperties.getInt("Base");
         int pngWidth = this.applicationProperties.getInt("PNGWidth");
         int pngHeight = this.applicationProperties.getInt("PNGHeight");
         String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
-        NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfCells, maxCellSize);
-
-        Integer[] values = new Integer[numberOfCells];
-        Integer[] currentMaxFitnessNumber = new Integer[numberOfCells];
+        NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfUnits, base);
+        Integer[] values = new Integer[numberOfUnits];
+        Integer[] currentMaxFitnessNumber = new Integer[numberOfUnits];
         double currentMaxFitnessValue = 0;
         String currentMaxFitnessBuffer;
 
-        for(int startNumberIterator = 0; startNumberIterator < numberOfCells; startNumberIterator++)
+        for(int startNumberIterator = 0; startNumberIterator < numberOfUnits; startNumberIterator++)
         {
             values[startNumberIterator] = Integer.parseInt(startNumber[startNumberIterator]);
         }
 
-        // Looping on a scalar value makes little sense here. If we are to scale up the buffer (e.g. 16 x 16) the
+        // Looping on a scalar value makes little sense here. If we are to scale up the bitBuffer (e.g. 16 x 16) the
         // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
         for(;;)
         {
-            AnyBaseNumber.NextValue(numberOfCells, maxCellSize, values);
+            AnyBaseNumber.NextValue(numberOfUnits, base, values);
             noiseBuffer.setupCellsFromArray(values);
             Integer[][] buffer = noiseBuffer.getBitBuffer();
 
-            fitnessCalculator.setBuffer(noiseBuffer.getNumberOfCells(), noiseBuffer.getNumberOfCells(), buffer);
-            fitnessCalculator.scanBuffer();
-
-            double fitnessValue = fitnessCalculator.calculateFitnessScore();
+            double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
 
             if ( fitnessValue > currentMaxFitnessValue)
             {
                 currentMaxFitnessValue = fitnessValue;
-                currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfCells, maxCellSize, values);
+                currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfUnits, values);
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                NumberToMedia.CreatePNG(noiseBuffer, numberOfCells, pngWidth, pngHeight, pngFilename);
+                NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
 
             }
         }

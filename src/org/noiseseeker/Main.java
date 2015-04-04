@@ -1,7 +1,7 @@
 package org.noiseseeker;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.noiseseeker.fitnessfunctions.LinesCountAndLengthFitness;
+import org.noiseseeker.fitnessfunctions.LinesCountAndLengthBitBufferFitness;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class Main
         }
 
         List<INoiseSeekerExperiment> experiments = new ArrayList<INoiseSeekerExperiment>();
-        experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthFitness()));
+        experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthBitBufferFitness()));
 
         for (INoiseSeekerExperiment experiment : experiments)
         {

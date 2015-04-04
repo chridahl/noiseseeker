@@ -1,13 +1,14 @@
 package org.noiseseeker.fitnessfunctions;
 
-import org.noiseseeker.FitnessCalculator;
+import org.noiseseeker.BitBufferFitnessCalculator;
+import org.noiseseeker.analyzers.LinesAnalyzer;
 
 import java.util.Enumeration;
 
 /**
  * Created by cdk on 03.04.2015.
  */
-public class LinesCountAndLengthFitness extends FitnessCalculator
+public class LinesCountAndLengthBitBufferFitness extends BitBufferFitnessCalculator
 {
     /**
      * This fitness functions rewards buffers with few long lines. In addition, it rewards buffers where only
@@ -15,24 +16,28 @@ public class LinesCountAndLengthFitness extends FitnessCalculator
      * @return
      */
     @Override
-    public double calculateFitnessScore()
+    public double calculateFitnessScore(int width, int height, Integer[][] bitBuffer)
     {
-        int numberOfLines = this.registeredLines.size();
+        LinesAnalyzer analyzer = new LinesAnalyzer();
+        analyzer.setBitBuffer(width, height, bitBuffer);
+        analyzer.analyze();
+
+        int numberOfLines = analyzer.getDetectedLines().size();
 
         int totalLength = 0;
         int fitnessScore = 0;
 
-        Enumeration<Long> enumKey = this.registeredLines.keys();
+        Enumeration<Long> enumKey = analyzer.getDetectedLines().keys();
 
         while(enumKey.hasMoreElements())
         {
             Long key = enumKey.nextElement();
-            int value = this.registeredLines.get(key);
+            int value = analyzer.getDetectedLines().get(key);
             totalLength += value;
         }
 
-        long searchSpace = this.dimensionX * this.dimensionY;
-        long markedBits = getMarkedBits();
+        long searchSpace = width * height;
+        long markedBits = analyzer.getNumberOfBits();
 
         fitnessScore = totalLength - numberOfLines;
 

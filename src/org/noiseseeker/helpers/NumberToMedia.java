@@ -9,7 +9,7 @@ import java.io.IOException;
 public class NumberToMedia
 {
     /**
-     * Creates a PNG from current buffer in given noiseBuffer
+     * Creates a PNG from current bitBuffer in given noiseBuffer
      * @param noiseBuffer
      * @param numberOfCells
      * @param pngWidth
