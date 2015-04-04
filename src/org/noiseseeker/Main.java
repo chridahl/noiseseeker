@@ -23,8 +23,8 @@ public class Main
         }
 
         FitnessCalculator lineFitnessCalculator = new LinesCountAndLengthFitnessCalculator();
-        NoiseSeekerExperimentRunner experimentOneRunner = new NoiseSeekerExperimentRunner(applicationProperties, lineFitnessCalculator);
-        experimentOneRunner.run();
+        NoiseSeekerLineFitnessExperiment lineFitnessExperiment = new NoiseSeekerLineFitnessExperiment(applicationProperties, lineFitnessCalculator);
+        lineFitnessExperiment.run();
     }
 }
 

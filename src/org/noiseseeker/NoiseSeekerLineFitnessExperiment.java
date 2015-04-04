@@ -2,13 +2,13 @@ package org.noiseseeker;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 
-public class NoiseSeekerExperimentRunner
+public class NoiseSeekerLineFitnessExperiment implements INoiseSeekerExperiment
 {
     private AbstractFileConfiguration applicationProperties;
     private FitnessCalculator fitnessCalculator;
 
-    public NoiseSeekerExperimentRunner(AbstractFileConfiguration applicationProperties,
-                                       FitnessCalculator fitnessCalculator)
+    public NoiseSeekerLineFitnessExperiment(AbstractFileConfiguration applicationProperties,
+                                            FitnessCalculator fitnessCalculator)
     {
         this.applicationProperties = applicationProperties;
         this.fitnessCalculator = fitnessCalculator;
@@ -18,14 +18,14 @@ public class NoiseSeekerExperimentRunner
     {
         int numberOfCells = this.applicationProperties.getInt("Cells");
         int maxCellSize = this.applicationProperties.getInt("MaxCellSize");
+        String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
         NoiseHelper noiseHelper = new NoiseHelper(numberOfCells, maxCellSize);
 
         Integer[] values = new Integer[numberOfCells];
-        String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
-        String currentMaxFitnessBuffer = "";
-        Integer[] currentMaxFitnessValues = new Integer[]{};
+        Integer[] currentMaxFitnessNumber = new Integer[numberOfCells];
         double currentMaxFitnessValue = 0;
+        String currentMaxFitnessBuffer;
 
         for(int startNumberIterator = 0; startNumberIterator < numberOfCells; startNumberIterator++)
         {
