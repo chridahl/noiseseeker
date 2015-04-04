@@ -16,6 +16,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 
     public void run()
     {
+
         int numberOfCells = this.applicationProperties.getInt("Cells");
         int maxCellSize = this.applicationProperties.getInt("MaxCellSize");
         int pngWidth = this.applicationProperties.getInt("PNGWidth");
@@ -23,6 +24,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
         String[] startNumber = this.applicationProperties.getStringArray("StartNumber");
 
         NoiseHelper noiseHelper = new NoiseHelper(numberOfCells, maxCellSize);
+
 
         Integer[] values = new Integer[numberOfCells];
         Integer[] currentMaxFitnessNumber = new Integer[numberOfCells];
@@ -38,7 +40,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
         // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
         for(;;)
         {
-            noiseHelper.intArrayNext(values);
+            NoiseNumber.intArrayNext(numberOfCells, maxCellSize, values);
             noiseHelper.setupCellsFromArray(values);
             Integer[][] buffer = noiseHelper.getCurrentBuffer();
 
@@ -50,7 +52,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
             if ( fitnessValue > currentMaxFitnessValue)
             {
                 currentMaxFitnessValue = fitnessValue;
-                currentMaxFitnessBuffer = noiseHelper.intArrayGetString(values);
+                currentMaxFitnessBuffer = NoiseNumber.intArrayGetString(numberOfCells, maxCellSize, values);
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);

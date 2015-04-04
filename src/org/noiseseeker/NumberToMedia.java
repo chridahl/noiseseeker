@@ -8,9 +8,19 @@ import java.io.IOException;
 
 public class NumberToMedia
 {
+    /**
+     * Creates a PNG from current buffer in given noiseHelper
+     * @param noiseHelper
+     * @param numberOfCells
+     * @param pngWidth
+     * @param pngHeight
+     * @param pngFilename
+     */
     public static void CreatePNG(NoiseHelper noiseHelper, int numberOfCells, int pngWidth, int pngHeight, String pngFilename)
     {
-        BufferedImage bufferedImage = new BufferedImage(numberOfCells*pngWidth,numberOfCells*pngHeight, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = new BufferedImage(numberOfCells*pngWidth,
+                numberOfCells*pngHeight,
+                BufferedImage.TYPE_INT_RGB);
 
         Graphics graphics = bufferedImage.getGraphics();
         graphics.setColor(Color.white);
