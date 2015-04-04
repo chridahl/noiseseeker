@@ -1,11 +1,13 @@
-package org.noiseseeker;
+package org.noiseseeker.fitnessfunctions;
+
+import org.noiseseeker.FitnessCalculator;
 
 import java.util.Enumeration;
 
 /**
  * Created by cdk on 03.04.2015.
  */
-public class LinesCountAndLengthFitnessCalculator extends FitnessCalculator
+public class LinesCountAndLengthFitness extends FitnessCalculator
 {
     /**
      * This fitness functions rewards buffers with few long lines. In addition, it rewards buffers where only

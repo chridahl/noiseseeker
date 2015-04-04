@@ -5,13 +5,13 @@ import java.util.Arrays;
 /**
  * Created by cdk on 04.04.2015.
  */
-public class NoiseNumber
+public class AnyBaseNumber
 {
     /**
      *
      * @param values
      */
-    public static void intArrayNext(int numberOfCells, int maxCellValue, Integer[] values)
+    public static void NextValue(int numberOfCells, int maxCellValue, Integer[] values)
     {
         int cellMinValue = 0;
         int cellMaxValue = maxCellValue + 1;
@@ -38,7 +38,7 @@ public class NoiseNumber
      * @param values
      * @return
      */
-    public static boolean intArrayIsMax(int numberOfCells, int maxCellValue, Integer[] values)
+    public static boolean IsMaxValue(int numberOfCells, int maxCellValue, Integer[] values)
     {
         boolean isMax = true;
         int cells = numberOfCells;
@@ -56,7 +56,7 @@ public class NoiseNumber
      * @param values
      * @return
      */
-    public static void intArrayPrint(int numberOfCells, Integer[] values)
+    public static void Print(int numberOfCells, Integer[] values)
     {
         int cells = numberOfCells;
 
@@ -73,7 +73,7 @@ public class NoiseNumber
      * @param values
      * @return
      */
-    public static String intArrayGetString(int numberOfCells, int maxCellValue, Integer[] values)
+    public static String GetAsString(int numberOfCells, int maxCellValue, Integer[] values)
     {
         int cells = numberOfCells;
         int cellMaxValue = maxCellValue;
@@ -90,12 +90,12 @@ public class NoiseNumber
 
 
     /**
-     *
+     * This is a really slow and badly implemented method. Can be optimized beyond recognition.
      * @param fromValues Values to start count from.
      * @param toValues Values to count to.
      * @return The distance between values.
      */
-    public static long intArrayDistance(int numberOfCells, int maxCellValue, Integer[] fromValues, Integer[] toValues) {
+    public static long Distance(int numberOfCells, int maxCellValue, Integer[] fromValues, Integer[] toValues) {
 
         long distance = 0;
 
@@ -112,15 +112,12 @@ public class NoiseNumber
 
         do
         {
-            NoiseNumber.intArrayNext(numberOfCells, maxCellValue, tmpFromValues);
+            AnyBaseNumber.NextValue(numberOfCells, maxCellValue, tmpFromValues);
             distance ++;
         }
         while(!Arrays.equals(tmpFromValues, tmpToValues));
 
         long absoluteDistance = Math.abs(distance);
-
-//        if (absoluteDistance == Long.MAX_VALUE)
-//            throw new Exception("Distance too great for type long");
 
         return absoluteDistance;
     }

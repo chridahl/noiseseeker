@@ -1,30 +1,34 @@
 package org.noiseseeker;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.noiseseeker.fitnessfunctions.LinesCountAndLengthFitness;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 
         File configurationFile = new File("application.properties");
         PropertiesConfiguration applicationProperties = new PropertiesConfiguration();
 
-        try
-        {
+        try {
             applicationProperties.load(configurationFile);
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("Could not open and/or read application.properties");
             System.exit(1);
         }
 
-        FitnessCalculator lineFitnessCalculator = new LinesCountAndLengthFitnessCalculator();
-        NoiseSeekerLineFitnessAlgorithm lineFitnessExperiment = new NoiseSeekerLineFitnessAlgorithm(applicationProperties, lineFitnessCalculator);
-        lineFitnessExperiment.run();
+        List<INoiseSeekerExperiment> experiments = new ArrayList<INoiseSeekerExperiment>();
+        experiments.add(new NoiseSeekerLineFitnessAlgorithm(applicationProperties, new LinesCountAndLengthFitness()));
+
+        for (INoiseSeekerExperiment experiment : experiments)
+        {
+            experiment.run();
+        }
+
     }
 }
 

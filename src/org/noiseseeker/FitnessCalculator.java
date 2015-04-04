@@ -179,6 +179,6 @@ public abstract class FitnessCalculator
      *
      * @return
      */
-    abstract double calculateFitnessScore();
+    public abstract double calculateFitnessScore();
 
 }

@@ -25,7 +25,6 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 
         NoiseHelper noiseHelper = new NoiseHelper(numberOfCells, maxCellSize);
 
-
         Integer[] values = new Integer[numberOfCells];
         Integer[] currentMaxFitnessNumber = new Integer[numberOfCells];
         double currentMaxFitnessValue = 0;
@@ -36,11 +35,12 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
             values[startNumberIterator] = Integer.parseInt(startNumber[startNumberIterator]);
         }
 
+
         // Looping on a scalar value makes little sense here. If we are to scale up the buffer (e.g. 16 x 16) the
         // number of possible combinations is higher than that of long's MAX_VALUE (2^63-1).
         for(;;)
         {
-            NoiseNumber.intArrayNext(numberOfCells, maxCellSize, values);
+            AnyBaseNumber.NextValue(numberOfCells, maxCellSize, values);
             noiseHelper.setupCellsFromArray(values);
             Integer[][] buffer = noiseHelper.getCurrentBuffer();
 
@@ -52,7 +52,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
             if ( fitnessValue > currentMaxFitnessValue)
             {
                 currentMaxFitnessValue = fitnessValue;
-                currentMaxFitnessBuffer = NoiseNumber.intArrayGetString(numberOfCells, maxCellSize, values);
+                currentMaxFitnessBuffer = AnyBaseNumber.GetAsString(numberOfCells, maxCellSize, values);
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
