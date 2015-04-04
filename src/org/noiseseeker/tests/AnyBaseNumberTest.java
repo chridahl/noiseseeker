@@ -2,7 +2,7 @@ package org.noiseseeker.tests;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.noiseseeker.AnyBaseNumber;
+import org.noiseseeker.helpers.AnyBaseNumber;
 
 /**
  * Created by cdk on 04.04.2015.

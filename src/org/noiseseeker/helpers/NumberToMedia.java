@@ -1,4 +1,4 @@
-package org.noiseseeker;
+package org.noiseseeker.helpers;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

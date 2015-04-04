@@ -1,6 +1,10 @@
 package org.noiseseeker;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
+import org.noiseseeker.helpers.AnyBaseNumber;
+import org.noiseseeker.helpers.NoiseHelper;
+import org.noiseseeker.helpers.NumberToMedia;
+import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
 public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 {

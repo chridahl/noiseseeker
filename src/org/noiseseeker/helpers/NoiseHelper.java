@@ -1,15 +1,5 @@
-package org.noiseseeker;
+package org.noiseseeker.helpers;
 
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.Arrays;
 
 /**
  * Various helper functions

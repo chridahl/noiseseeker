@@ -1,4 +1,4 @@
-package org.noiseseeker;
+package org.noiseseeker.helpers;
 
 import java.util.Arrays;
 

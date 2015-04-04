@@ -2,6 +2,7 @@ package org.noiseseeker;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.noiseseeker.fitnessfunctions.LinesCountAndLengthFitness;
+import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
 import java.io.File;
 import java.util.ArrayList;
