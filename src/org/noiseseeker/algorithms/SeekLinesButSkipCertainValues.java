@@ -3,7 +3,7 @@ package org.noiseseeker.algorithms;
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.noiseseeker.fitnesscalculators.BitBufferFitnessCalculator;
 import org.noiseseeker.helpers.AnyBaseNumber;
-import org.noiseseeker.helpers.NoiseBuffer;
+import org.noiseseeker.helpers.AnyBaseNumberBitBuffer;
 import org.noiseseeker.helpers.NumberToMedia;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
@@ -55,7 +55,7 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
         if ( numberOfUnits != 8 && base != 256)
             throw new Exception("SeekLinesButSkipCertainValues will only work with base 256 and 8 as number of units.");
 
-        NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfUnits, base);
+        AnyBaseNumberBitBuffer anyBaseNumberBitBuffer = new AnyBaseNumberBitBuffer(numberOfUnits, base);
         Integer[] values = new Integer[numberOfUnits];
         Integer[] currentMaxFitnessNumber = new Integer[numberOfUnits];
         double currentMaxFitnessValue = 0;
@@ -72,10 +72,10 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
 
             if ( !shouldSkipValue(values))
             {
-                noiseBuffer.setupCellsFromArray(values);
-                Integer[][] buffer = noiseBuffer.getBitBuffer();
+                anyBaseNumberBitBuffer.setupCellsFromArray(values);
+                Integer[][] buffer = anyBaseNumberBitBuffer.getBitBuffer();
 
-                double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
+                double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(anyBaseNumberBitBuffer.getNumberOfUnits(), anyBaseNumberBitBuffer.getNumberOfUnits(), buffer);
 
                 if ( fitnessValue > 20)
                 {
@@ -84,7 +84,7 @@ public class SeekLinesButSkipCertainValues implements INoiseSeekerExperiment
                     System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                     String pngFilename = String.format("pngs/test-%1s.png", filenameIdIterator++);
-                    NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
+                    NumberToMedia.CreatePNG(anyBaseNumberBitBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
                 }
 
             }

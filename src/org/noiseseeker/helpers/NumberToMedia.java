@@ -9,14 +9,14 @@ import java.io.IOException;
 public class NumberToMedia
 {
     /**
-     * Creates a PNG from current bitBuffer in given noiseBuffer
-     * @param noiseBuffer
+     * Creates a PNG from current bitBuffer in given anyBaseNumberBitBuffer
+     * @param anyBaseNumberBitBuffer
      * @param numberOfCells
      * @param pngWidth
      * @param pngHeight
      * @param pngFilename
      */
-    public static void CreatePNG(NoiseBuffer noiseBuffer, int numberOfCells, int pngWidth, int pngHeight, String pngFilename)
+    public static void CreatePNG(AnyBaseNumberBitBuffer anyBaseNumberBitBuffer, int numberOfCells, int pngWidth, int pngHeight, String pngFilename)
     {
         BufferedImage bufferedImage = new BufferedImage(numberOfCells*pngWidth,
                 numberOfCells*pngHeight,
@@ -30,7 +30,7 @@ public class NumberToMedia
         for (int y = 0; y < numberOfCells; y++)
             for (int x = 0; x < numberOfCells; x++)
             {
-                if ( noiseBuffer.getBitAtRowAndCloumn(y, x) == 1 )
+                if ( anyBaseNumberBitBuffer.getBitAtRowAndCloumn(y, x) == 1 )
                 {
                     graphics.fillRect(x * pngWidth, y * pngHeight, pngWidth, pngHeight);
                 }

@@ -3,7 +3,7 @@ package org.noiseseeker.algorithms;
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.noiseseeker.fitnesscalculators.BitBufferFitnessCalculator;
 import org.noiseseeker.helpers.AnyBaseNumber;
-import org.noiseseeker.helpers.NoiseBuffer;
+import org.noiseseeker.helpers.AnyBaseNumberBitBuffer;
 import org.noiseseeker.helpers.NumberToMedia;
 import org.noiseseeker.interfaces.INoiseSeekerExperiment;
 
@@ -29,7 +29,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
 
 
 
-        NoiseBuffer noiseBuffer = new NoiseBuffer(numberOfUnits, base);
+        AnyBaseNumberBitBuffer anyBaseNumberBitBuffer = new AnyBaseNumberBitBuffer(numberOfUnits, base);
         Integer[] values = new Integer[numberOfUnits];
         Integer[] currentMaxFitnessNumber = new Integer[numberOfUnits];
         double currentMaxFitnessValue = 0;
@@ -45,10 +45,10 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
         for(;;)
         {
             AnyBaseNumber.NextValue(numberOfUnits, base, values);
-            noiseBuffer.setupCellsFromArray(values);
-            Integer[][] buffer = noiseBuffer.getBitBuffer();
+            anyBaseNumberBitBuffer.setupCellsFromArray(values);
+            Integer[][] buffer = anyBaseNumberBitBuffer.getBitBuffer();
 
-            double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(noiseBuffer.getNumberOfUnits(), noiseBuffer.getNumberOfUnits(), buffer);
+            double fitnessValue = bitBufferLinesFitnessCalculator.calculateFitnessScore(anyBaseNumberBitBuffer.getNumberOfUnits(), anyBaseNumberBitBuffer.getNumberOfUnits(), buffer);
 
             if ( fitnessValue > currentMaxFitnessValue)
             {
@@ -57,7 +57,7 @@ public class NoiseSeekerLineFitnessAlgorithm implements INoiseSeekerExperiment
                 System.out.println("Current leader has fitness " + currentMaxFitnessValue + " and " + currentMaxFitnessBuffer);
 
                 String pngFilename = String.format("pngs/test-%1s.png", fitnessValue);
-                NumberToMedia.CreatePNG(noiseBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
+                NumberToMedia.CreatePNG(anyBaseNumberBitBuffer, numberOfUnits, pngWidth, pngHeight, pngFilename);
 
             }
         }

@@ -1,13 +1,13 @@
 package org.noiseseeker.helpers;
 
 
-public class NoiseBuffer
+public class AnyBaseNumberBitBuffer
 {
     private Integer rows[];
     private int base;
     private int numberOfUnits;
 
-    public NoiseBuffer(int numberOfUnits, int base)
+    public AnyBaseNumberBitBuffer(int numberOfUnits, int base)
     {
         this.numberOfUnits = numberOfUnits;
         this.base = base;

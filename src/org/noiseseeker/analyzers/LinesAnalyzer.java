@@ -1,7 +1,5 @@
 package org.noiseseeker.analyzers;
 
-import org.noiseseeker.helpers.NoiseBuffer;
-
 import java.util.Hashtable;
 
 /**
