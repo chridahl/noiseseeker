@@ -5,7 +5,7 @@ import java.util.Enumeration;
 /**
  * Created by cdk on 03.04.2015.
  */
-public class LinesFitnessCalculator extends FitnessCalculator
+public class LinesCountAndLengthFitnessCalculator extends FitnessCalculator
 {
     /**
      * This fitness functions rewards buffers with few long lines. In addition, it rewards buffers where only

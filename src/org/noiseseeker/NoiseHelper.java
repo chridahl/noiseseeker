@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  * Various helper functions
@@ -192,6 +194,39 @@ public class NoiseHelper
         }
 
         return stringBuilder.toString();
+    }
+
+
+    /**
+     *
+     * @param fromValues Values to start count from.
+     * @param toValues Values to count to.
+     * @return The distance between values.
+     */
+    public long intArrayDistance(Integer[] fromValues, Integer[] toValues) throws Exception
+    {
+        long distance = 0;
+        int cells = fromValues.length;
+
+        Integer[] tmpFromValues = new Integer[cells];
+        Integer[] tmpToValues = new Integer[cells];
+
+        System.arraycopy( fromValues, 0, tmpFromValues, 0, cells );
+        System.arraycopy( toValues, 0, tmpFromValues, 0, cells );
+
+        do
+        {
+            this.intArrayNext(fromValues);
+            distance ++;
+        }
+        while(!Arrays.equals(tmpFromValues, tmpToValues));
+
+        long absoluteDistance = Math.abs(distance);
+
+        if (absoluteDistance == Long.MAX_VALUE)
+            throw new Exception("Distance too great for type long");
+
+        return absoluteDistance;
     }
 
 
