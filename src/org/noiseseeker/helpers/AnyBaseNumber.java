@@ -14,7 +14,7 @@ public class AnyBaseNumber
     public static void NextValue(int numberOfUnits, int base, Integer[] values)
     {
         int cellMinValue = 0;
-        int cellMaxValue = base + 1;
+        int cellMaxValue = base;
         int cellIndex = numberOfUnits - 1;
 
         values[cellIndex] = values[cellIndex] + 1;

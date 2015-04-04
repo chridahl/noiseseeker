@@ -19,11 +19,11 @@ public class LinesCountAndLengthBitBufferFitness extends BitBufferFitnessCalcula
     public double calculateFitnessScore(int width, int height, Integer[][] bitBuffer)
     {
         LinesAnalyzer analyzer = new LinesAnalyzer();
+
         analyzer.setBitBuffer(width, height, bitBuffer);
         analyzer.analyze();
 
         int numberOfLines = analyzer.getDetectedLines().size();
-
         int totalLength = 0;
         int fitnessScore = 0;
 
@@ -41,7 +41,6 @@ public class LinesCountAndLengthBitBufferFitness extends BitBufferFitnessCalcula
 
         fitnessScore = totalLength - numberOfLines;
 
-        // Try to keep ratio between 40% - 60% of marked bits. Reward buffers in this zone.
         double percentageMarkedBits = (markedBits / searchSpace) * 100;
 
         if ( percentageMarkedBits >= 40.0 && percentageMarkedBits <= 60.0)
