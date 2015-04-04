@@ -11,11 +11,6 @@ import java.util.Enumeration;
  */
 public class LinesAndBlocksBitBufferFitness extends BitBufferFitnessCalculator
 {
-    /**
-     * This fitness functions rewards buffers with few long lines. In addition, it rewards buffers where only
-     * 40-60% of the buffers is marked.
-     * @return
-     */
     @Override
     public double calculateFitnessScore(int width, int height, Integer[][] bitBuffer)
     {
@@ -41,13 +36,10 @@ public class LinesAndBlocksBitBufferFitness extends BitBufferFitnessCalculator
             totalLength += value;
         }
 
-
         int numberOfBlocks = blocksAnalyser.getDetectedBlocks().size();
-
         long searchSpace = width * height;
 
         fitnessScore = totalLength - numberOfLines - (numberOfBlocks * 4);
-
 
         return fitnessScore;
     }
