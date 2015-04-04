@@ -1,6 +1,6 @@
 # Noise Seeker
 
-Noise Seeker is an algorithm which aims at exploring potential order in visual noise and chaos. More likely than not this project
+Noise Seeker is suit of algorithms designed for exploring potential order in sensible noise and chaos. More likely than not this project
 is utterly useless, but the underlying questions raised are nevertheless interesting:
 
 - What are the properties of humanly recognizable 'noise'?
