@@ -32,3 +32,11 @@ It also looks less 'random'. Now for the final generated image:
 ![Shapeish 2](https://github.com/chridahl/noiseseeker/blob/master/imgs/test-89462.png?raw=true "Shapeish 2")
 
 It certainly looks more recognizable to something unknown than compared to the other two images.
+
+Early Problems
+--------------
+
+There are some challenges in preventing images gaining fitness points on the basis of pixels that have been 'stacked'
+together. An analyzer to punish images with stacks of blocks present will be implemented.
+
+![Block Problem](https://github.com/chridahl/noiseseeker/blob/master/imgs/block-problem.png?raw=true "Block Problem")
